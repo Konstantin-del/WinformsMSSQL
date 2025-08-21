@@ -1,5 +1,6 @@
 
 using System.Data;
+using System.Text;
 using WinFormsService;
 
 namespace WinForms;
@@ -15,6 +16,8 @@ namespace WinForms;
 	{
 		try
 		{
+			txtLastName.KeyPress += TxtLastName_KeyPress;
+			txtLastName.TextChanged += TxtLastName_TextChanged;
 			await LoadLookupsAsync();
 			await LoadPersonsAsync();
 		}
@@ -70,6 +73,8 @@ namespace WinForms;
 			gridPersons.Columns["Дата приема"].DefaultCellStyle.Format = "d";
 		if (gridPersons.Columns.Contains("Дата увольнения"))
 			gridPersons.Columns["Дата увольнения"].DefaultCellStyle.Format = "d";
+
+		UpdateRowCount();
 	}
 
 	private static DataTable BuildPersonsView(DataTable source)
@@ -123,11 +128,61 @@ namespace WinForms;
 	{
 		try
 		{
+			if (!IsLettersOnly(txtLastName.Text))
+			{
+				MessageBox.Show("Вводите только буквы в поле Фамилия.", "Неверный ввод", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				return;
+			}
 			await LoadPersonsAsync();
 		}
 		catch (Exception ex)
 		{
 			MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+		}
+	}
+
+	private bool _lastNameWarned;
+
+	private void TxtLastName_KeyPress(object? sender, KeyPressEventArgs e)
+	{
+		if (!char.IsControl(e.KeyChar) && !char.IsLetter(e.KeyChar))
+		{
+			e.Handled = true;
+			if (!_lastNameWarned)
+			{
+				_lastNameWarned = true;
+				MessageBox.Show("Разрешены только буквы.", "Неверный ввод", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			}
+		}
+	}
+
+	private void TxtLastName_TextChanged(object? sender, EventArgs e)
+	{
+		if (IsLettersOnly(txtLastName.Text))
+		{
+			_lastNameWarned = false;
+		}
+	}
+
+	private static bool IsLettersOnly(string? text)
+	{
+		if (string.IsNullOrWhiteSpace(text)) return true;
+		foreach (var ch in text)
+		{
+			if (!char.IsLetter(ch)) return false;
+		}
+		return true;
+	}
+
+	private void UpdateRowCount()
+	{
+		if (gridPersons?.DataSource is DataTable table)
+		{
+			lblRowCount.Text = $"Строк: {table.Rows.Count}";
+		}
+		else
+		{
+			lblRowCount.Text = $"Строк: {gridPersons?.Rows.Count ?? 0}";
 		}
 	}
     }

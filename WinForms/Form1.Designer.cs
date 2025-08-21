@@ -36,6 +36,7 @@ namespace WinForms
             lblFrom = new Label();
             lblTo = new Label();
             lblLastName = new Label();
+            lblRowCount = new Label();
             ((System.ComponentModel.ISupportInitialize)gridPersons).BeginInit();
             SuspendLayout();
             // 
@@ -135,7 +136,7 @@ namespace WinForms
             gridPersons.RowHeadersVisible = false;
             gridPersons.RowHeadersWidth = 51;
             gridPersons.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            gridPersons.Size = new Size(843, 387);
+            gridPersons.Size = new Size(843, 360);
             gridPersons.TabIndex = 8;
             // 
             // txtLastName
@@ -201,11 +202,22 @@ namespace WinForms
             lblLastName.TabIndex = 15;
             lblLastName.Text = "Фамилия";
             // 
+            // lblRowCount
+            // 
+            lblRowCount.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            lblRowCount.AutoSize = true;
+            lblRowCount.Location = new Point(14, 570);
+            lblRowCount.Name = "lblRowCount";
+            lblRowCount.Size = new Size(74, 20);
+            lblRowCount.TabIndex = 16;
+            lblRowCount.Text = "Строк: 0";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(871, 600);
+            Controls.Add(lblRowCount);
             Controls.Add(lblLastName);
             Controls.Add(lblTo);
             Controls.Add(lblFrom);
@@ -249,5 +261,6 @@ namespace WinForms
         private Label lblFrom;
         private Label lblTo;
         private Label lblLastName;
+        private Label lblRowCount;
     }
 }
