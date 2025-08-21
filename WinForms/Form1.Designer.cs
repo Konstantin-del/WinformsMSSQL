@@ -181,7 +181,7 @@ namespace WinForms
             lblFrom.Name = "lblFrom";
             lblFrom.Size = new Size(107, 20);
             lblFrom.TabIndex = 13;
-            lblFrom.Text = "Дата приемки";
+            lblFrom.Text = "";
             // 
             // lblTo
             // 
@@ -190,7 +190,7 @@ namespace WinForms
             lblTo.Name = "lblTo";
             lblTo.Size = new Size(13, 20);
             lblTo.TabIndex = 14;
-            lblTo.Text = " ";
+            lblTo.Text = "";
             // 
             // lblLastName
             // 

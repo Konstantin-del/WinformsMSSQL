@@ -55,8 +55,7 @@ BEGIN
     p.[date_uneploy],    
     s.[name],
     d.[name],
-    po.[name],      
-    CONCAT(p.[last_name], ' ', p.[first_name], ' ', p.[second_name]) AS [full_name]
+    po.[name],   
   FROM dbo.[persons] p
   INNER JOIN dbo.[status] s ON s.[id] = p.[status_id]
   INNER JOIN dbo.[deps] d   ON d.[id] = p.[dep_id]
@@ -77,6 +76,7 @@ END
 GO
 
  
+
 
 
 

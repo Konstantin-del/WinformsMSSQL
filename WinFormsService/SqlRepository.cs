@@ -4,13 +4,13 @@ using System.Data;
 
 namespace WinFormsService
 {
-    public sealed class LookupRow
+    public class LookupRow
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
     }
 
-    public sealed class SqlRepository
+    public class SqlRepository
     {
         private readonly string _connectionString;
 
