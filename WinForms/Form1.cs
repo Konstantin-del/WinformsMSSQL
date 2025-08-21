@@ -1,6 +1,5 @@
 
 using System.Data;
-using System.Text;
 using WinFormsService;
 
 namespace WinForms;
@@ -87,30 +86,21 @@ namespace WinForms;
 		result.Columns.Add("Дата приема", typeof(DateTime));
 		result.Columns.Add("Дата увольнения", typeof(DateTime));
 
-		string? DuplicateName(string baseName, int index)
-		{
-			var candidate = index == 0 ? baseName : baseName + index.ToString();
-			return source.Columns.Contains(candidate) ? candidate : null;
-		}
 
-		string? statusCol = source.Columns.Contains("status_name") ? "status_name" : DuplicateName("name", 0);
-		string? depCol = source.Columns.Contains("dep_name") ? "dep_name" : DuplicateName("name", 1);
-		string? postCol = source.Columns.Contains("post_name") ? "post_name" : DuplicateName("name", 2);
 
 		foreach (DataRow row in source.Rows)
 		{
 			string lastName = Convert.ToString(row["last_name"]) ?? string.Empty;
 			string firstName = Convert.ToString(row["first_name"]) ?? string.Empty;
 			string secondName = Convert.ToString(row["second_name"]) ?? string.Empty;
+            string statusName = Convert.ToString(row["name"]) ?? string.Empty;
+            string depName = Convert.ToString(row["name1"]) ?? string.Empty;
+            string postName = Convert.ToString(row["name2"]) ?? string.Empty;
 
-			string initials = string.Empty;
+            string initials = string.Empty;
 			if (!string.IsNullOrWhiteSpace(firstName)) initials += " " + char.ToUpperInvariant(firstName[0]) + ".";
 			if (!string.IsNullOrWhiteSpace(secondName)) initials += " " + char.ToUpperInvariant(secondName[0]) + ".";
 			string fio = (lastName + initials).Trim();
-
-			string statusName = statusCol != null ? Convert.ToString(row[statusCol]) ?? string.Empty : string.Empty;
-			string depName = depCol != null ? Convert.ToString(row[depCol]) ?? string.Empty : string.Empty;
-			string postName = postCol != null ? Convert.ToString(row[postCol]) ?? string.Empty : string.Empty;
 
 			object employ = DBNull.Value;
 			if (!(row["date_employ"] is DBNull)) employ = row["date_employ"];
